@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+        {{- $configMap := "environment-variables" }}
+        {{- $office_ip := (index .Data $configMap "OFFCIE_IP") }}
+        nginx.ingress.kubernetes.io/whitelist-source-range: {{$office_ip}}
+spec:
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-service
+            port:
+              number: 80
