@@ -6,7 +6,7 @@ if there's existing configmap in cluster, how deployment could get setting insid
 ## Setup
 - minikube start
 - deploy configmap `kubectl apply -f ./kustomize-with-online-config/repo_global_configmap/configmap.yaml`
-- deploy nginx `cd repo_application && kubectl kustomize . | kubectl apply -f -`
+- deploy nginx `cd ./kustomize-with-online-config/repo_application && kubectl kustomize . | kubectl apply -f -`
 
 ## Verify
 ```
