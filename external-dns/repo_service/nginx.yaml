@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: aiqua-slim
+  name: dev-test-nginx
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: nginx.stg-sg0.qgraph-vpc.io
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    name: http
+    targetPort: 80
+  selector:
+    app: dev-test-nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: aiqua-slim
+  name: dev-test-nginx
+spec:
+  selector:
+    matchLabels:
+      app: dev-test-nginx
+  template:
+    metadata:
+      labels:
+        app: dev-test-nginx
+    spec:
+      containers:
+      - image: nginx
+        name: dev-test-nginx
+        ports:
+        - containerPort: 80
+          name: http
